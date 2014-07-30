@@ -67,6 +67,14 @@ class FacebookData
       update_first_and_last_friends_on_fb(data)
       update_gender_ratios(data)
     end
+    return  {:joiners => joiners, 
+             :friends => {
+              :total_friends => total_friends, 
+              :male_friends => male_friends,
+              :female_friends => female_friends
+              },
+            :friends_birthdays => birthday_info
+            }
   end
 
   def print
@@ -82,5 +90,5 @@ class FacebookData
 
 end
 
-my_friends = FacebookData.new("CAACEdEose0cBAB7ap6BkbPK7ZAIIOPikXSml5HC6jmDlT5qtm9MywYmeuZBDVIZA9c7VD5ZCM0saD3CZBWCNuwGWYtwppuvYGEgLSpyn2OGvMcDmZC2ULS1EmgcJPid6q4pNcZA4W083OpjVeRbAHeMYUpZC37pHokp7sqGw8eJiEPzu2EjkJs3fFeOxnwxKYoZCVNDyXx190DAZDZD")
+my_friends = FacebookData.new("")
 my_friends.print
