@@ -1,0 +1,109 @@
+<div class="main-container">
+  <h1>Tic-Tac-Toe</h1>
+  <% if @message %>
+    <h2><%= @message %></h2>
+  <% end %>
+  <div class="nested-container">
+    <table width="500">
+      <tr>
+        <td>
+          <% if @board[0][0] == "1" && @message == nil %>
+            <form action="/move" method="post">
+              <input name="move" value="1" type="hidden">
+              <input type="submit" value="">
+            </form>
+          <% else %>
+            <div class="piece"><div class="piece"><%= @board[0][0] %></div>
+          <% end %>
+        </td> 
+        <td>
+          <% if @board[0][1] == "2" && @message == nil %>
+            <form action="/move" method="post">
+              <input name="move" value="2" type="hidden">
+              <input type="submit" value="">
+            </form>
+          <% else %>
+            <div class="piece"><%= @board[0][1] %></div>
+          <% end %> 
+        </td>   
+        <td>
+          <% if @board[0][2] == "3" && @message == nil %>
+            <form action="/move" method="post">
+              <input name="move" value="3" type="hidden">
+              <input type="submit" value="">
+            </form>
+          <% else %>
+            <div class="piece"><%= @board[0][2] %></div>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <% if @board[1][0] == "4" && @message == nil %>
+            <form action="/move" method="post">
+              <input name="move" value="4" type="hidden">
+              <input type="submit" value="">
+            </form>
+          <% else %>
+            <div class="piece"><%= @board[1][0] %></div>
+          <% end %>
+        </td> 
+        <td>
+          <% if @board[1][1] == "5" && @message == nil %>
+            <form action="/move" method="post">
+              <input name="move" value="5" type="hidden">
+              <input type="submit" value="">
+            </form>
+          <% else %>
+            <div class="piece"><%= @board[1][1] %></div>
+          <% end %> 
+        </td>   
+        <td>
+          <% if @board[1][2] == "6" && @message == nil %>
+            <form action="/move" method="post">
+              <input name="move" value="6" type="hidden">
+              <input type="submit" value="">
+            </form>
+          <% else %>
+            <div class="piece"><%= @board[1][2] %></div>
+          <% end %>
+        </td>
+      </tr
+      <tr>
+        <td>
+          <% if @board[2][0] == "7" && @message == nil %>
+            <form action="/move" method="post">
+              <input name="move" value="7" type="hidden">
+              <input type="submit" value="">
+            </form>
+          <% else %>
+            <div class="piece"><%= @board[2][0] %></div>
+          <% end %>
+        </td> 
+        <td>
+          <% if @board[2][1] == "8" && @message == nil %>
+            <form action="/move" method="post">
+              <input name="move" value="8" type="hidden">
+              <input type="submit" value="">
+            </form>
+          <% else %>
+            <div class="piece"><%= @board[2][1] %></div>
+          <% end %> 
+        </td>   
+        <td>
+          <% if @board[2][2] == "9" && @message == nil %>
+            <form action="/move" method="post">
+              <input name="move" value="9" type="hidden">
+              <input type="submit" value="">
+            </form>
+          <% else %>
+            <div class="piece"><%= @board[2][2] %></div>
+          <% end %>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <a href="/reset">
+    <div class="btn btn-primary">New Game</div>
+  </a>
+</div>
