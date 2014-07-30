@@ -62,7 +62,18 @@ class FacebookData
     end
   end
 
+  def print
+    main
+    puts "Total Friends"
+    puts "#{total_friends}"
+    puts "Female Friends"
+    puts "#{female_friends}"
+    puts "Male Friends"
+    puts "#{male_friends}"
+    puts joiners
+  end
+
 end
 
 my_friends = FacebookData.new("")
-my_friends.
+my_friends.print
