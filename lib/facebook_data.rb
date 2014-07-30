@@ -5,15 +5,22 @@ require "pry"
 
 class FacebookData
   attr_accessor :total_friends, :female_friends, :male_friends, 
-                :joiners, :lowest_id, :highest_id
+                :joiners, :lowest_id, :highest_id, :birthday_info
   attr_reader   :token, :graph
 
   def initialize(token)
     @token = token
     @graph = Koala::Facebook::API.new(token)
+    @birthday_info = []
+
     @joiners = {first_on_fb: {}, last_on_fb: {}}
+
     @lowest_id = Float::INFINITY
-    @total_friends, @male_friends, @female_friends, @highest_id = 0
+    @highest_id = 0
+
+    @total_friends = 0
+    @male_friends = 0
+    @female_friends = 0
   end
 
   def friends
@@ -26,30 +33,30 @@ class FacebookData
 
   def update_birthday_hash(data)
     if data["birthday"]
-      birthday_info << {:name => data["name"], :id => data["id"], :birthday => data["birthday"] }
+      birthday_info << {:first_name => data["first_name"], :last_name => data["last_name"], :id => data["id"], :birthday => data["birthday"] }
     end
   end
 
   def update_first_and_last_friends_on_fb(data)
-    numerical_id = data["id"].to_s
-    if numerical_id < lowest_id_num
+    id = data["id"].to_i
+    if id < lowest_id
       joiners[:first_on_fb][:name] = data["name"]
-      joiners[:first_on_fb][:id] = numerical_id
-      @lowest_id_num = numerical_id
+      joiners[:first_on_fb][:id] = id
+      self.lowest_id = id
     end
-    if numerical_id > highest_id_num
+    if id > highest_id
       joiners[:last_on_fb][:name] = data["name"]
-      joiners[:last_on_fb][:id] = numerical_id
-      @highest_id_num = numerical_id
+      joiners[:last_on_fb][:id] = id
+      self.highest_id = id
     end
   end
 
   def update_gender_ratios(data)
-    total_friends += 1
+    self.total_friends += 1
     if data["gender"] == "male"
-      male += 1
+      self.male_friends += 1
     elsif data["gender"] == "female"
-      female += 1
+      self.female_friends += 1
     end
   end
 
@@ -75,5 +82,5 @@ class FacebookData
 
 end
 
-my_friends = FacebookData.new("")
+my_friends = FacebookData.new("CAACEdEose0cBAB7ap6BkbPK7ZAIIOPikXSml5HC6jmDlT5qtm9MywYmeuZBDVIZA9c7VD5ZCM0saD3CZBWCNuwGWYtwppuvYGEgLSpyn2OGvMcDmZC2ULS1EmgcJPid6q4pNcZA4W083OpjVeRbAHeMYUpZC37pHokp7sqGw8eJiEPzu2EjkJs3fFeOxnwxKYoZCVNDyXx190DAZDZD")
 my_friends.print
