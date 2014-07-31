@@ -5,6 +5,7 @@ gem "sinatra"
 gem 'activesupport'
 gem 'i18n'
 gem "koala"
+gem "nokogiri"
 
 group :development do
   gem 'dotenv'
