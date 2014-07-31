@@ -20,7 +20,12 @@ class App < Sinatra::Application
     code = params["code"]
     html =  Nokogiri::HTML(open("https://graph.facebook.com/oauth/access_token?client_id=#{ENV["APP_ID"]}&redirect_uri=#{redirect_uri}&client_secret=#{ENV["APP_SECRET"]}&code=#{code}"))
     token = html.search("p").children.text[13..-1]
-    @data = FacebookData.new(token).main
+    begin
+      @data = FacebookData.new(token).main
+    rescue
+      binding.pry
+      @data ||= "message: Malformed access token"
+    end
     erb :result
   end
 
