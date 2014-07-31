@@ -5,7 +5,7 @@ Bundler.require
 require 'open-uri'
 require 'json'
 require './lib/facebook_data.rb'
-
+require 'pry'
 class App < Sinatra::Application
   
   enable :sessions
@@ -24,6 +24,7 @@ class App < Sinatra::Application
 
   get "/result" do
     begin
+      session[:access_token]
       @data = FacebookData.new(session[:access_token]).main
     rescue
       @data ||= "error occurred"
