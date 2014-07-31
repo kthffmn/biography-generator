@@ -8,21 +8,31 @@ require './lib/facebook_data.rb'
 
 
 class App < Sinatra::Application
+  
+  enable :sessions
 
   get "/" do
-    @root = ENV["ROOT_URL"]
-    erb :index
+    if session[:access_token].nil?
+      @facebook_url = "https://www.facebook.com/dialog/oauth?client_id=#{ENV["APP_ID"]}&redirect_uri=#{ENV["REDIRECT_URI"]}"
+      erb :index
+    else
+      redirect '/result'
+    end
   end
 
   get '/callback' do
-    redirect_uri = "#{ENV["ROOT_URL"]}/callback"
     code = params["code"]
-    html =  Nokogiri::HTML(open("https://graph.facebook.com/oauth/access_token?client_id=#{ENV["APP_ID"]}&redirect_uri=#{redirect_uri}&client_secret=#{ENV["APP_SECRET"]}&code=#{code}"))
+    html =  Nokogiri::HTML(open("https://graph.facebook.com/oauth/access_token?client_id=#{ENV["APP_ID"]}&redirect_uri=#{ENV["REDIRECT_URI"]}&client_secret=#{ENV["APP_SECRET"]}&code=#{code}"))
     token = html.search("p").children.text[13..-1].gsub(/&expires.+/, "")
+    session[:access_token] = token
+    redirect "/result"
+  end
+
+  get "/result" do
     begin
-      @data = FacebookData.new(token).main
+      @data = FacebookData.new(session[:access_token]).main
     rescue
-      @data ||= "Koala::Facebook::ServerError: type: OAuthException, code: 1, message: An unknown error has occurred. [HTTP 500]"
+      @data ||= "error has occurred"
     end
     erb :result
   end
