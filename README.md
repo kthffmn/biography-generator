@@ -7,7 +7,6 @@ Command line:
 git clone https://github.com/kthffmn/facebook-data-miner.git
 cd facebook-data-miner
 bundle install
-rackup
 touch .env
 subl .env
 ```
