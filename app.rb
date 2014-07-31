@@ -26,7 +26,7 @@ class App < Sinatra::Application
     begin
       @data = FacebookData.new(session[:access_token]).main
     rescue
-      @data ||= "error has occurred"
+      @data ||= "error occurred"
     end
     erb :result
   end

@@ -1,2 +1,6 @@
 <h1>Result</h1>
-<p><%= @data %></p>
+<p><% @data %></p>
+
+<% if @data == "error occurred" %>
+  <%= binding.pry %>
+<% end %>
