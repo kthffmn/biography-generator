@@ -1,6 +1,9 @@
 <h1>Result</h1>
-<p><% @data %></p>
-
-<% if @data == "error occurred" %>
-  <%= binding.pry %>
-<% end %>
+<p><strong>Data</strong></p>
+<ul>
+  <li><%= @data %></li>
+<ul>
+<p><strong>Token</strong></p>
+<ul>
+  <li><%= session[:access_token] %> %></li>
+<ul>
