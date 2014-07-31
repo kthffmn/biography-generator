@@ -1,8 +1,3 @@
-require "koala"
-require "json"
-require 'open-uri'
-require "pry"
-
 class FacebookData
   attr_accessor :total_friends, :female_friends, :male_friends, 
                 :joiners, :lowest_id, :highest_id, :birthday_info
@@ -67,28 +62,16 @@ class FacebookData
       update_first_and_last_friends_on_fb(data)
       update_gender_ratios(data)
     end
-    return  {:joiners => joiners, 
-             :friends => {
-              :total_friends => total_friends, 
-              :male_friends => male_friends,
-              :female_friends => female_friends
-              },
-            :friends_birthdays => birthday_info
-            }
-  end
-
-  def print
-    main
-    puts "Total Friends"
-    puts "#{total_friends}"
-    puts "Female Friends"
-    puts "#{female_friends}"
-    puts "Male Friends"
-    puts "#{male_friends}"
-    puts joiners
+    {:joiners => joiners, 
+     :friends => {
+      :total_friends => total_friends, 
+      :male_friends => male_friends,
+      :female_friends => female_friends
+      },
+    :friends_birthdays => birthday_info
+    }
   end
 
 end
 
-my_friends = FacebookData.new("")
-my_friends.print
+# 

@@ -7,12 +7,21 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
+    addressable (2.3.6)
     bond (0.5.1)
     coderay (1.1.0)
+    faraday (0.9.0)
+      multipart-post (>= 1.2, < 3)
     i18n (0.6.11)
     json (1.8.1)
+    koala (1.10.0)
+      addressable
+      faraday
+      multi_json
     method_source (0.8.2)
     minitest (5.4.0)
+    multi_json (1.10.1)
+    multipart-post (2.0.0)
     pry (0.10.0)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -53,6 +62,7 @@ PLATFORMS
 DEPENDENCIES
   activesupport
   i18n
+  koala
   pry
   shotgun
   sinatra
