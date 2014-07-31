@@ -7,6 +7,7 @@ gem 'i18n'
 gem "koala"
 
 group :development do
+  gem 'dotenv'
   gem "shotgun" # no more server restart
   gem "tux" # debugger for app
   gem "pry"
