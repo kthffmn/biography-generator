@@ -1,9 +1,13 @@
-<h1>Result</h1>
-<p><strong>Data</strong></p>
-<ul>
-  <li><%= @data %></li>
-</ul>
-<p><strong>Token</strong></p>
-<ul>
-  <li><%= session[:access_token] %></li>
-</ul>
+<div class="container">
+
+  <p><img src="<%= @data[:profile_photo] %>"><p>
+  <p>Welcome <%= @data[:name] %>.</p>
+  <p>You are <%= @data[:age] %> years old.</p>
+  <p>Your email is <a href="mailto:<%= @data[:email] %>"><%= @data[:email] %></a>.</p>
+  <p>You are <%= @data[:gender] %>.</p>
+  <p>You have <%= @data[:total_friends] %> total friends.</p>
+  <p><%= @data %></p>
+
+
+<!-- {:id=>"716020835102043", :birthday=>"06/18/1989", :education=>[{"school"=>{"id"=>"109689455715585", "name"=>"Green Mountain High School"}, "type"=>"High School"}, {"school"=>{"id"=>"106135559418556", "name"=>"Sarah Lawrence College"}, "type"=>"College"}, {"school"=>{"id"=>"103127603061486", "name"=>"Columbia University"}, "type"=>"College", "year"=>{"id"=>"144044875610606", "name"=>"2011"}}], :email=>"ktahoffman@gmail.com", :first_name=>"Katie", :gender=>"female", :hometown=>{"id"=>"115590505119035", "name"=>"Denver, Colorado"}, :last_name=>"Hoffman", :link=>"https://www.facebook.com/app_scoped_user_id/716020835102043/", :location=>{"id"=>"112111905481230", "name"=>"Brooklyn, New York"}, :locale=>"en_US", :name=>"Katie Hoffman", :timezone=>-4, :updated_time=>"2014-04-25T19:22:55+0000", :verified=>true, :website=>"http://kthffmn.com", :work=>[{"employer"=>{"id"=>"268786299894321", "name"=>"Flatiron School"}}], :total_friends=>528, :profile_photo=>"https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xap1/v/t1.0-1/p50x50/1375725_589462764424518_555844256_n.jpg?oh=6c99a822e7e9e9ef6eda0a17079fd1a6&oe=5441B673&__gda__=1412942584_9d29c3cb6e4261c3aec2aa4b220bc35f", :age=>25} -->
+</div>

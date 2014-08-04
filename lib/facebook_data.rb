@@ -2,87 +2,63 @@ require 'koala'
 require 'json'
 require 'open-uri'
 require 'pry'
+require 'date'
+require 'time'
 
 class FacebookData
-  attr_accessor :total_friends, :female_friends, :male_friends, 
-                :joiners, :lowest_id, :highest_id, :birthday_info
-  attr_reader   :token, :graph
+  attr_accessor :user_data
+  attr_reader :token, :graph, :base_url
 
   def initialize(token)
+    @base_url = "https://graph.facebook.com/v2.0/"
     @token = token
-    @graph = Koala::Facebook::API.new(@token)
-    # @birthday_info = []
-
-    # @joiners = {first_on_fb: {}, last_on_fb: {}}
-
-    # @lowest_id = Float::INFINITY
-    # @highest_id = 0
-
-    # @total_friends = 0
-    # @male_friends = 0
-    # @female_friends = 0
+    @graph = Koala::Facebook::API.new(token)
+    @user_data = {}
   end
 
-  def friend_count
+  def runner
+    get_personal_info
+    get_friend_count
+    get_photos
+    get_age
+    user_data
+  end
+
+  def get_age
+    bd = user_data[:birthday].split("/").collect {|s| s.to_i }
+    birthday = DateTime.new(bd[2], bd[0], bd[1])
+    now = Time.now.utc.to_date
+    age = now.year - birthday.year - ((now.month > birthday.month || (now.month == birthday.month && now.day >= birthday.day)) ? 0 : 1)
+    user_data[:age] = age
+  end
+
+  def get_fb_data(url)
+    final_url = base_url + url + "access_token=#{token}"
     data = []
-    url = "https://graph.facebook.com/v2.0/me?fields=friends&access_token=#{token}"
-    open(url) do |f| 
+    open(final_url) do |f| 
       f.each_line do |line| 
         data << JSON.parse(line)
       end
     end
-    data[0]["friends"]["summary"]["total_count"]
+    return data[0]
   end
 
-  # def fetch_data(id)
-  #   JSON.load(open("https://graph.facebook.com/user?id=#{id}&access_token=#{token}"))
-  # end
+  def get_friend_count
+    friend_data = get_fb_data("me?fields=friends&")
+    user_data[:total_friends] = friend_data["friends"]["summary"]["total_count"]
+  end
 
-  # def update_birthday_hash(data)
-  #   if data["birthday"]
-  #     birthday_info << {:first_name => data["first_name"], :last_name => data["last_name"], :id => data["id"], :birthday => data["birthday"] }
-  #   end
-  # end
+  def get_personal_info
+    personal_info = get_fb_data("me?")
+    personal_info.each do |k, v|
+      user_data[k.to_sym] = v
+    end
+  end
 
-  # def update_first_and_last_friends_on_fb(data)
-  #   id = data["id"].to_i
-  #   if id < lowest_id
-  #     joiners[:first_on_fb][:name] = data["name"]
-  #     joiners[:first_on_fb][:id] = id
-  #     self.lowest_id = id
-  #   end
-  #   if id > highest_id
-  #     joiners[:last_on_fb][:name] = data["name"]
-  #     joiners[:last_on_fb][:id] = id
-  #     self.highest_id = id
-  #   end
-  # end
-
-  # def update_gender_ratios(data)
-  #   self.total_friends += 1
-  #   if data["gender"] == "male"
-  #     self.male_friends += 1
-  #   elsif data["gender"] == "female"
-  #     self.female_friends += 1
-  #   end
-  # end
-
-  # def main
-  #   friends.each_with_index do |friend_hash, i|
-  #     data = fetch_data(friend_hash["id"])
-  #     update_birthday_hash(data)
-  #     update_first_and_last_friends_on_fb(data)
-  #     update_gender_ratios(data)
-  #   end
-  #   {:joiners => joiners, 
-  #    :friends => {
-  #     :total_friends => total_friends, 
-  #     :male_friends => male_friends,
-  #     :female_friends => female_friends
-  #     },
-  #   :friends_birthdays => birthday_info
-  #   }
-  # end
+  def get_photos
+    photo_data = get_fb_data("me/photos?")
+    profile_data = get_fb_data("me/picture?redirect=false&")
+    user_data[:profile_photo] = profile_data["data"]["url"]
+  end
 
 end
-
