@@ -1,18 +1,15 @@
 <div class="container">
 
   <% pronoun = @data[:gender] == "female" ? "she" : "he" %>
+  <% possesive_pronoun = pronoun == "she" ? "her" : "his" %>
 
   <p><img src="<%= @data[:profile_photo] %>"><p>
 
   <p><strong>Generated Biography</strong></p>
-  <p><%= @data[:name] %> hails from <%= @data[:hometown]  %>, where <%= pronoun %> attended <%= @data[:high_school] %>. <%= pronoun.capitalize %> went on to <%= @data[:college][:name] %> where <%= pronoun %> graduated in <%= @data[:college][:year] %>. Now <%= @data[:age] %>, <%= @data[:first_name] %> lives in <%= @data[:location] %> and has worked at <%= @data[:work] %>. <%= @data[:first_name] %> has <%= @data[:total_friends] %> total Facebook friends. <%= pronoun.capitalize %> can be reached at 
-    <a href="mailto:<%= @data[:email] %>">
-      <%= @data[:email] %>
-    </a> 
-    and her website is 
-    <a href="<%= @data[:website] %>">
-      <%= @data[:website] %>
-    </a>.
+  <p><%= @data[:name] %> hails from <%= @data[:hometown]  %>, where <%= pronoun %> attended <%= @data[:high_school] %>. <%= pronoun.capitalize %> went on to <%= @data[:college][:name] %> where <%= pronoun %> graduated in <%= @data[:college][:year] %>. Now <%= @data[:age] %>, <%= @data[:first_name] %> lives in <%= @data[:location] %> and has worked at <%= @data[:work] %>. <%= pronoun.capitalize %> has <%= @data[:total_friends] %> total Facebook friends and can be reached at 
+    <a href="mailto:<%= @data[:email] %>"><%= @data[:email] %></a>. 
+    <%= possesive_pronoun.capitalize %> website is 
+    <a target="_blank" href="<%= @data[:website] %>"><%= @data[:website] %></a>.
   </p>
 
 </div>

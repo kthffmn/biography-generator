@@ -83,7 +83,9 @@ class FacebookData
 
   def get_friend_count
     friend_data = get_fb_data("me?fields=friends&")
-    data[:total_friends] = friend_data["friends"]["summary"]["total_count"]
+    total = friend_data["friends"]["summary"]["total_count"]
+    formatted_total = total.to_s.reverse.gsub(/...(?=.)/,'\&,').reverse
+    data[:total_friends] = formatted_total
   end
 
   def get_personal_info
