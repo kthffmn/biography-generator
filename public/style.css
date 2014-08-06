@@ -1,5 +1,5 @@
 .jumbotron {
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 .contained {
@@ -9,37 +9,19 @@
 
 .pic-and-bio {
   width: 100%;
-  background-color: yellow;
-  position: relative;
-  text-align: center;
-  vertical-align: middle;
-  height: 100%;
+  text-align: center; 
 }
 
 .pic, .bio {
-  padding: 20px;
   display: inline-block;
-  background-color: #EEEEEE; 
-  border-radius: 7px;
   vertical-align: middle;
   margin: 10px;
 }
 
-
 .bio {
-  display: inline-block;
-  max-width: 500px;
-  background-color: blue;
+  padding: 10px 0px 0px 10px;
+  max-width: 886px;
   text-align: left;
-}
-
-.pic {
-  display: inline-block;
-  background-color: red;
-}
-
-img {
-  top:0;
-  bottom:0;
-  margin:auto;
+  border-left-style: solid;
+  border-width: 1px;
 }
