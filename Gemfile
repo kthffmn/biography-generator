@@ -1,15 +1,14 @@
 source 'https://rubygems.org'
 
-ruby '2.1.0'
-gem "sinatra"
-gem 'activesupport'
-gem 'i18n'
-gem "koala"
-gem "nokogiri"
+gem 'sinatra'
+gem 'require_all'
+gem 'koala'
+gem 'dotenv', :group => [:test, :development]
+gem 'pry', :group => [:test, :development]
 
-group :development do
-  gem 'dotenv'
-  gem "shotgun" # no more server restart
-  gem "tux" # debugger for app
-  gem "pry"
+group :test do
+  gem 'rspec'
+  gem 'capybara'
+  gem 'rack-test'
+  gem 'capybara-webkit'
 end
