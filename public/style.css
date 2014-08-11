@@ -26,3 +26,7 @@
   border-left-style: solid;
   border-width: 1px;
 }
+
+.token {
+  font-size: 0.5em;
+}

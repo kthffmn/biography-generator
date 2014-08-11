@@ -199,9 +199,9 @@ class FacebookData
     end
   end
 
-  ############################
-  # add age and friend count #
-  ############################
+  #########################################
+  # add age, friend count, email, website #
+  #########################################
 
   def add_age
     if data["birthday"]
