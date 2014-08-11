@@ -17,6 +17,15 @@ class FacebookData
     @pic_url = get_fb_data("me/picture?redirect=false&")["data"]["url"]
   end
 
+  def fetch_pic
+    data = get_fb_data("me/picture?redirect=false&")
+    if data["data"]
+      if data["data"["url"]
+        return data["data"["url"]
+      end
+    end
+    return "http://placekitten.com/52/52"
+  end
   ###########
   # runners #
   ###########
@@ -179,12 +188,12 @@ class FacebookData
   def add_edu_to_bio(hash, type_key)
     if hash[type_key].any?
       temp_list = format_array(hash[type_key])
-      bio << "#{name_pronouns[:pronoun].capitalize} attended #{temp_list}."
+      bio << "#{name_pronouns[:pronoun].capitalize} #{["attended", "went to"].sample} #{temp_list}."
       # add year
       year_key  = (type_key.to_s + "_years").to_sym
       if hash[year_key].any?
-        bio[-1][-1] = " " # replace period with a space
-        bio << "where #{name_pronouns[:pronoun]} graduated in #{hash[year_key].max}."
+        bio[-1][-1] = "" # delete period
+        bio << " where #{name_pronouns[:pronoun]} graduated in #{hash[year_key].max}."
       end
     end
   end
@@ -246,6 +255,7 @@ class FacebookData
   def add_email_and_website
     ["email", "website"].each do |key|
       if data[key]
+        bio[-1][-1] = "" # delete period
         bio << "#{name_pronouns[:possesive_pronoun].capitalize} #{key.to_s} is #{data[key]}."
       end
     end
