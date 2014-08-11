@@ -6,14 +6,16 @@
   </div>
 
   <div class="pic-and-bio">
-    <div class="pic"><img src="<%= @data[:profile_photo] %>"></div>
+    <div class="pic"><img src="<%= @pic_url %>"></div>
 
     <div class="bio">
-        <%= @data[:name] %> hails from <%= @data[:hometown]  %>, where <%= @data[:pronoun] %> attended <%= @data[:high_school] %>. <%= @data[:pronoun].capitalize %> went on to <%= @data[:college][:name] %> where <%= @data[:pronoun] %> graduated in <%= @data[:college][:year] %>. Now <%= @data[:age] %>, <%= @data[:first_name] %> lives in <%= @data[:location] %> and has worked at <%= @data[:work] %>. <%= @data[:pronoun].capitalize %> has <%= @data[:total_friends] %> total Facebook friends and can be reached at 
-        <a href="mailto:<%= @data[:email] %>"><%= @data[:email] %></a>. 
-        <%= @data[:possesive_pronoun].capitalize %> website is 
-        <a target="_blank" href="<%= @data[:website] %> "><%= @data[:website] %></a>.
+      <%= @bio %>
     </div>
+
+    <div class="bio">
+      <strong>Token:</strong> <%= @token %>
+    </div>
+
   </div>
 
 </div>
