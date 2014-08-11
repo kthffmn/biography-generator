@@ -2,7 +2,6 @@ source 'https://rubygems.org'
 
 gem 'sinatra'
 gem 'require_all'
-gem 'koala'
 gem 'dotenv', :group => [:test, :development]
 gem 'pry', :group => [:test, :development]
 
