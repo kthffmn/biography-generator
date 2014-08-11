@@ -14,7 +14,7 @@ resources: 3
 
 2. This lab uses Capybara, Capybara-Webkit, and Dotenv gems. Run `gem install capybara` and `gem install dotenv` if they're not already installed on your machine. Make sure you run `brew install qt` before running `gem install capybara-webkit` as it relies on [QT](https://github.com/thoughtbot/capybara-webkit/wiki/Installing-Qt-and-compiling-capybara-webkit). Once your environment has each gem, go ahead and `bundle install`.
 
-3. Make a new app on Facebook's API page. In your Facebook app's Advanced Settings page, you'll need to specify the callback URI. Since this lab uses Rackup (localhost:9292), specify the callback URI as `http://localhost:9292/callback`. 
+3. Make a new app on [Facebook's Developer interface](https://developers.facebook.com/apps). In your Facebook app's Advanced Settings page, you'll need to specify the callback URI. Since this lab uses Rackup (localhost:9292), specify the callback URI as `http://localhost:9292/callback`. 
   * On the Facebook interface for your app, make sure it has access to the following scopes:
     * email
     * user_birthday
