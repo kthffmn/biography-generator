@@ -13,7 +13,7 @@ class FacebookData
     @token = token
     @data = {}
     @name_pronouns = {}
-    @bio = ""
+    @bio = []
     @pic_url = get_fb_data("me/picture?redirect=false&")["data"]["url"]
   end
 
@@ -21,8 +21,10 @@ class FacebookData
   # runners #
   ###########
 
-  def self.run(token)
-    new(token).get_data.set_data.write_bio
+  def run
+    get_data
+    set_data
+    write_bio
   end
 
   def set_data
@@ -37,6 +39,12 @@ class FacebookData
     add_age
     add_friend_count
     add_email_and_website
+    format_bio
+  end
+
+  def format_bio
+    bio_array = self.bio
+    self.bio = bio_array.join(" ")
   end
 
   ##################
@@ -44,7 +52,9 @@ class FacebookData
   ##################
 
   def format_array(array)
-    if array.length > 1
+    if array.length == 2
+      return "#{array[0]} and #{array[1]}"
+    elsif 2 < array.length
       array[-1].insert(0, "and ")
     end
     array.join(", ")    
@@ -142,34 +152,39 @@ class FacebookData
   #################
 
   def education_hash
-    high_school, high_school_years, colleges, college_years = []
+    high_school       = []
+    high_school_years = []
+    colleges          = []
+    college_years     = []
     data["education"].each do |edu|
       if edu["type"]
         if edu["type"] == "High School"
           high_school       << fetch_nested_string(edu, "school", "name")
-          high_school_years << fetch_nested_number(edu, "year"  ,"name")
+          high_school_years << fetch_nested_number(edu, "year"  ,"name") if fetch_nested_number(edu, "year"  ,"name") 
         elsif edu["type"] == "College"
           colleges      << fetch_nested_string(edu, "school","name") 
-          college_years << fetch_nested_number(edu, "year"  ,"name")
+          college_years << fetch_nested_number(edu, "year"  ,"name") if fetch_nested_number(edu, "year"  ,"name")
         end
       end
     end
     edu_hash = {
       :high_school => high_school, 
       :high_school_years => high_school_years, 
-      :colleges => colleges, 
+      :college => colleges, 
       :college_years => college_years
     }
     return edu_hash
   end
 
-  def add_edu_to_bio(hash, type_key, year_key)
-    if hash[:type_key].any?
-      temp_list = format_array(hash[:type_key])
-      bio << "#{name_pronouns[:pronoun]} attended #{temp_list}."
-      if edu[:year_key].any?
-        bio[-1] = " " # replace period with a space
-        bio << "and graduated in #{edu[:year_key].max}."
+  def add_edu_to_bio(hash, type_key)
+    if hash[type_key].any?
+      temp_list = format_array(hash[type_key])
+      bio << "#{name_pronouns[:pronoun].capitalize} attended #{temp_list}."
+      # add year
+      year_key  = (type_key.to_s + "_years").to_sym
+      if hash[year_key].any?
+        bio[-1][-1] = " " # replace period with a space
+        bio << "where #{name_pronouns[:pronoun]} graduated in #{hash[year_key].max}."
       end
     end
   end
@@ -177,7 +192,9 @@ class FacebookData
   def add_education
     edu = education_hash
     edu_types = [:high_school, :college]
-    edu_types.each {|type| add_edu_to_bio(edu, type) }
+    edu_types.each do |type|
+      add_edu_to_bio(edu, type) 
+    end
   end
 
   ############
@@ -195,7 +212,7 @@ class FacebookData
         end
       end
       work_list = format_array(employers)
-      bio << "#{name_pronouns[:name]} has worked at #{format_array(work_list)}."
+      bio << "#{name_pronouns[:first_name]} has worked at #{work_list}."
     end
   end
 
@@ -209,7 +226,7 @@ class FacebookData
       birthday = DateTime.new(bd[2], bd[0], bd[1])
       now = Time.now.utc.to_date
       age = now.year - birthday.year - ((now.month > birthday.month || (now.month == birthday.month && now.day >= birthday.day)) ? 0 : 1)
-      bio << "#{name_pronouns[:name]} is now #{age}."
+      bio << "#{name_pronouns[:pronoun].capitalize} is now #{age}."
     end
   end
 
@@ -220,7 +237,7 @@ class FacebookData
         if friend_data["friends"]["summary"]["total_count"]
           total = friend_data["friends"]["summary"]["total_count"]
           formatted_total = total.to_s.reverse.gsub(/...(?=.)/,'\&,').reverse
-          bio << "#{name_pronouns[:name]} has #{formatted_total} total Facebook friends."
+          bio << "#{name_pronouns[:first_name].capitalize} has #{formatted_total} total Facebook friends."
         end
       end
     end

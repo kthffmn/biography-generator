@@ -1,21 +1,18 @@
-
 <div class="jumbotron">
 
   <div class="contained">
     <h1>Generated Biography</h1>
   </div>
 
+  <div class="contained token">
+    <strong>Token:</strong> <%= @token %>
+  </div>
+
   <div class="pic-and-bio">
     <div class="pic"><img src="<%= @pic_url %>"></div>
-
     <div class="bio">
       <%= @bio %>
     </div>
-
-    <div class="token">
-      <strong>Token:</strong> <%= @token %>
-    </div>
-
   </div>
 
 </div>
