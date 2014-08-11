@@ -43,8 +43,10 @@ class App < Sinatra::Application
   end
 
   get "/result" do
-    user = FacebookData.new(session[:access_token])
-    @data = user.data
+    @token = session[:access_token]
+    data = FacebookData.new(@token)
+    @bio = data.bio
+    @pic_url = data.pic_url
     erb :result
   end
 
