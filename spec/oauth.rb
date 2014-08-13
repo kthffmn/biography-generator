@@ -2,16 +2,10 @@ require_relative 'spec_helper'
 
 describe 'user actions', :type => :feature do
 
-  it "H1 header displays text 'Short Bio Generator'" do
+  it "displays index.erb when at root url and not failure page" do
     visit '/'
-    page.all("h1").count.should eql(1)
-    expect(page).to have_content('Short Bio Generator')
-  end
-
-  it "encourages users to click on link" do
-    visit '/'
-    binding.pry
-    expect(page).to have_content('Please click')
+    expect(page).to_not have_content('error')
+    page.save_and_open_page
   end
 
   it 'displays link to log in via Facebook' do 
