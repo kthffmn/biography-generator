@@ -3,5 +3,5 @@ ENV['SINATRA_ENV'] ||= "development"
 require 'bundler/setup'
 Bundler.require(:default, ENV['SINATRA_ENV'])
 
-require_all 'lib'
-require './app.rb'
+require './lib/facebook_data.rb'
+require './app.rb'  
