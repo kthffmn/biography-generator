@@ -2,6 +2,11 @@ require_relative 'spec_helper'
 
 describe 'user actions', :type => :feature do
 
+  it 'displays text about logging in via Facebook' do
+    visit '/'
+    expect(page).to have_content('Login through Facebook')
+  end
+  
   it 'displays link to log in' do 
     visit '/'
     expect(page).to have_link('Login through Facebook')
