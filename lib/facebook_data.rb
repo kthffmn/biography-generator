@@ -20,8 +20,8 @@ class FacebookData
   def fetch_pic
     data = get_fb_data("me/picture?redirect=false&")
     if data["data"]
-      if data["data"["url"]
-        return data["data"["url"]
+      if data["data"]["url"]
+        return data["data"]["url"]
       end
     end
     return "http://placekitten.com/52/52"
@@ -256,7 +256,7 @@ class FacebookData
     ["email", "website"].each do |key|
       if data[key]
         bio[-1][-1] = "" # delete period
-        bio << "#{name_pronouns[:possesive_pronoun].capitalize} #{key.to_s} is #{data[key]}."
+        bio << " and #{name_pronouns[:possesive_pronoun]} #{key.to_s} is #{data[key]}."
       end
     end
   end
