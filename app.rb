@@ -4,8 +4,6 @@ require 'bundler'
 Bundler.require
 require 'open-uri'
 require 'json'
-require './lib/facebook_data.rb'
-require 'pry'
 class App < Sinatra::Application
   
   enable :sessions
