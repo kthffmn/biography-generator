@@ -1,10 +1,6 @@
-require "dotenv"
-Dotenv.load
-require 'bundler'
-Bundler.require
-require 'open-uri'
-require 'json'
-class App < Sinatra::Application
+require_relative './config/environment'
+
+class FacebookApp < Sinatra::Application
   
   enable :sessions
 

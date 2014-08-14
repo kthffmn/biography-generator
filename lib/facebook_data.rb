@@ -1,9 +1,3 @@
-require 'json'
-require 'open-uri'
-require 'pry'
-require 'date'
-require 'time'
-
 class FacebookData
   attr_accessor :data, :bio, :pic_url, :name_pronouns
   attr_reader :token, :base_url
