@@ -1,11 +1,11 @@
-require_relative 'spec_helper'
+require 'spec_helper'
 
 describe 'user actions', :type => :feature do
 
   it "displays index.erb when at root url and not failure page" do
     visit '/'
-    expect(page).to_not have_content('error')
     page.save_and_open_page
+    expect(page).to_not have_content('error')
   end
 
   it 'displays link to log in via Facebook' do 
