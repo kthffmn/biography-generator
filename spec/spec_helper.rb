@@ -4,6 +4,11 @@ require_relative '../config/environment'
 require 'rack/test'
 require 'capybara/rspec'
 require 'capybara/dsl'
+require "rack_session_access/capybara"
+
+FacebookApp.configure do |app|
+  app.use RackSessionAccess::Middleware
+end
 
 RSpec.configure do |config|
   config.run_all_when_everything_filtered = true

@@ -6,7 +6,7 @@ describe 'User flow', :type => :feature do
     visit '/'
     expect(page).to have_link("Login through Facebook")
     expect(page.all('#facebook-login').count).to eq(1)
-    expect(page.all('#facebook-login')).to have_content("Login through Facebook")
+    expect(page.all('#facebook-login')[0].text).to eq("Login through Facebook")
   end
 
   it "index page's link has the correct url for the first step of logging in via Facebook" do 

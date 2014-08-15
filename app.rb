@@ -3,8 +3,7 @@ require_relative './config/environment'
 class FacebookApp < Sinatra::Application
   set :views, File.dirname(__FILE__) + '/views'
   set :public_folder, File.dirname(__FILE__) + '/public'
-  use RackSessionAccess if environment == :test
-  
+
   enable :sessions
 
   get "/" do
