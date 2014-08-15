@@ -34,7 +34,7 @@ resources: 4
   APP_ID=APP-ID-GOES-HERE
   REDIRECT_URI=http://localhost:9292/callback
   ```
-5. In `app.rb`, change the value of @facebook_url so that it links to the first URL of Facebook's OAuth process. Refer to the [Facebook Login Flow](https://developers.facebook.com/docs/facebook-login/manually-build-a-login-flo) for help. Make sure that the url specifies each scope on the list of scopes above.
+5. This lab has a fews tests, to get them to run, enter `rspec spec/oauth.rb`. Let's start with that first test. In `app.rb`, change the value of @facebook_url so that it links to the first URL of Facebook's OAuth process. Refer to the [Facebook Login Flow](https://developers.facebook.com/docs/facebook-login/manually-build-a-login-flo) for help. Make sure that the url specifies each scope on the list of scopes above.
 
 6. In `app.rb`, capture the code that Facebook returns to your app's callback URI and use it to fetch an access token for a user.
 
