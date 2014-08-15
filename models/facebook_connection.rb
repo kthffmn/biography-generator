@@ -4,7 +4,7 @@ class FacebookConnection
 
   def initialize(code)
     @url = "https://graph.facebook.com/oauth/access_token?client_id=#{ENV["APP_ID"]}&redirect_uri=#{ENV["REDIRECT_URI"]}&client_secret=#{ENV["APP_SECRET"]}&code=#{code}"
-    @token = "unknown"
+    @token = "unrecognized_code"
   end
 
   def set_token
@@ -14,8 +14,9 @@ class FacebookConnection
           self.token = param.split("=")[1]
         end
       end
+    rescue
     end
-    return token
+    token
   end
 
 end

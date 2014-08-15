@@ -11,10 +11,11 @@ class FacebookData
     @pic_url = "http://placekitten.com/g/50/50"
   end
 
-  def fetch_pic
+  def get_pic
     begin
       data = get_fb_data("me/picture?redirect=false&")
       self.pic_url = data["data"]["url"]
+    rescue
     end
   end
 
@@ -22,11 +23,10 @@ class FacebookData
   # runners #
   ###########
   def run
-    self.bio = []
     get_data
     set_data
     write_bio
-    fetch_pic
+    get_pic
     return self
   end
 
@@ -36,13 +36,14 @@ class FacebookData
   end
 
   def write_bio
-    add_locations
-    add_education
+    self.bio = [] # turn string to array
+    add_locations # shovel info into array |
+    add_education #                        v
     add_work
     add_age
     add_friend_count
-    add_email_and_website
-    format_bio
+    add_email_and_website 
+    format_bio # convert array to string
   end
 
   def format_bio

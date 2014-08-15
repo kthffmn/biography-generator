@@ -10,4 +10,5 @@ group :test do
   gem 'capybara'
   gem 'rack-test'
   gem 'capybara-webkit'
+  gem 'rack_session_access'
 end

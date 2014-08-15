@@ -22,6 +22,17 @@ describe 'User flow', :type => :feature do
     end
   end
 
+  it "'/callback' accepts a code in the params and eventually redirects to '/results'" do
+    visit "/callback?code=ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    expect(page).to have_content('Generated Biography')
+  end
+
+  it "'/callback' set each session's 'access_token' by querying Facebook for a token using the code from params (the access_token should default to 'unrecognized_code')" do
+    visit "/callback?code=ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    expect(page.get_rack_session_key('access_token')).to_not be_nil
+    expect(page.get_rack_session_key('access_token')).to eq('unrecognized_code')
+  end
+
   it "result page defaults to bio as 'Sorry for the inconvenience...'" do
     visit '/result'
     expect(page).to have_content("Sorry for the inconvenience, but a generated biography is unavailable.")
