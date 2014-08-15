@@ -5,6 +5,7 @@ require 'rack/test'
 require 'capybara/rspec'
 require 'capybara/dsl'
 require "rack_session_access/capybara"
+require 'base64'
 
 FacebookApp.configure do |app|
   app.use RackSessionAccess::Middleware
