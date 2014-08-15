@@ -40,10 +40,15 @@ class FacebookApp < Sinatra::Application
 
   get "/result" do
     @token = session[:access_token]
-    data = FacebookData.new(@token)
-    data.run
-    @bio = data.bio
-    @pic_url = data.pic_url
+    begin
+      data = FacebookData.new(@token)
+      data.run
+      @bio = data.bio
+      @pic_url = data.pic_url
+    rescue
+      @bio ||= "Invalid token"
+      @pic_url ||= "http://placekitten.com/g/50/50"
+    end
     erb :result
   end
 

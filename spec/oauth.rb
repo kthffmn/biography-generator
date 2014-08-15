@@ -1,22 +1,31 @@
 require 'spec_helper'
 
-describe 'user actions', :type => :feature do
-
-  it "displays index.erb when at root url and not failure page" do
-    visit '/'
-    page.save_and_open_page
-    expect(page).to_not have_content('error')
-  end
+describe 'Login user', :type => :feature do
 
   it 'displays link to log in via Facebook' do 
     visit '/'
-    expect(page).to find_link("Login through Facebook")
+    expect(page).to have_link("Login through Facebook")
   end
 
-  it 'directs users to a bio page' do 
-    visit '/'
-    click_link('Login through Facebook')
-    expect(page).to have_content 'Generated Biography'
+  it "result page displays user bio" do
+    @pic_url = "spongebob.png"
+    @bio = "SpongeBob SquarePants is a yellow sponge who wears square pants, thus the name. He lives in a pineapple at 124 Conch Street with his pet snail, Gary, in the underwater city of Bikini Bottom."
+    @token = "2387f9vdweersdsf9s0vss7sddddd7sdfwerwuf9sd0vusdapeoe09q8w0kjc32490slfjdfsdf"
+    erb :result
+    expect(page).to have_content(@bio)
   end
 
+  it "result page displays user picture in with the id 'user-picture'" do
+    @pic_url = "spongebob.png"
+    @bio = "SpongeBob SquarePants is a yellow sponge who wears square pants, thus the name. He lives in a pineapple at 124 Conch Street with his pet snail, Gary, in the underwater city of Bikini Bottom."
+    @token = "2387f9vdweersdsf9s0vss7sddddd7sdfwerwuf9sd0vusdapeoe09q8w0kjc32490slfjdfsdf"
+    erb :result
+    expect(page.find('#user-picture')['src']).to have_content(@pic_url)
+  end
+
+  it "result page defaults to bio as 'invalid token' and user picture as a 50x50 placekitten" do
+    visit '/result'
+    expect(page).to have_content("Invalid token")
+    expect(page.find('#user-picture')['src']).to have_content("http://placekitten.com/g/50/50")
+  end
 end
