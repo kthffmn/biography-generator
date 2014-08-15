@@ -8,9 +8,11 @@ class FacebookConnection
   end
 
   def set_token
-    if open(url)
+    begin
       open(url).read.split("&").each do |param|
-        token = param.split("=")[1] if param =~ /access_token(.*)/ 
+        if param =~ /access_token(.*)/ 
+          self.token = param.split("=")[1]
+        end
       end
     end
     return token

@@ -12,19 +12,17 @@ class FacebookData
   end
 
   def fetch_pic
-    data = get_fb_data("me/picture?redirect=false&")
-    if data["data"]
-      if data["data"]["url"]
-        pic_url = data["data"]["url"]
-      end
+    begin
+      data = get_fb_data("me/picture?redirect=false&")
+      self.pic_url = data["data"]["url"]
     end
   end
-  
+
   ###########
   # runners #
   ###########
   def run
-    bio = []
+    self.bio = []
     get_data
     set_data
     write_bio
