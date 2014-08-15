@@ -42,4 +42,15 @@ describe 'User flow', :type => :feature do
     visit '/result'
     expect(page.find('#user-picture')['src']).to have_content("http://placekitten.com/g/50/50")
   end
+
+  it "'/result' takes session's 'access_token' and uses it to obtain information on the user" do
+    page.set_rack_session("access_token" => "CAACEdEose0cBAMkfK7vumUK9cj5quwc8awkZAZCr1vnQcuT7AbGSLVUUiYR0H75EN4n3SIZBjQfhiEnZBwQ9Tcj9ZCsRwTyusPTunxoM90lwyVEfZCyEZAZCg6i24BQPCyVDekwmcU6PLj2YAZCawWrzjWMkuX6AczpENUcLH7N9bqcXaz2m3OxxJWl5UIfWz5UcpC8f20f4cHTHfGmZAZCrDna")
+    visit '/result'
+    expect(page).to have_content("Katie Hoffman")
+    expect(page).to have_content("Brooklyn, New York")
+    expect(page).to have_content("Denver, Colorado")
+    expect(page).to have_content("ktahoffman@gmail.com")
+    expect(page).to have_content("http://kthffmn.com")
+    expect(page).to have_content("Columbia University")
+  end
 end
