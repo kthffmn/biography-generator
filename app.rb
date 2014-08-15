@@ -28,6 +28,7 @@ class FacebookApp < Sinatra::Application
 
   get '/callback' do
     code = params["code"]
+    binding.pry
     url = "https://graph.facebook.com/oauth/access_token?client_id=#{ENV["APP_ID"]}&redirect_uri=#{ENV["REDIRECT_URI"]}&client_secret=#{ENV["APP_SECRET"]}&code=#{code}"
     params = {}
     open(url).read.split("&").each do |param|
@@ -46,7 +47,7 @@ class FacebookApp < Sinatra::Application
       @bio = data.bio
       @pic_url = data.pic_url
     rescue
-      @bio ||= "Invalid token"
+      @bio ||= "Sorry for the inconvenience, but a generated biography is unavailable."
       @pic_url ||= "http://placekitten.com/g/50/50"
     end
     erb :result
