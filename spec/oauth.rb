@@ -2,17 +2,30 @@ require 'spec_helper'
 
 describe 'User flow', :type => :feature do
 
-  it 'index page displays link to log in via Facebook' do 
+  it 'index page displays correct text for link to log in via Facebook' do 
     visit '/'
     expect(page).to have_link("Login through Facebook")
   end
 
-  it "'/callback' url takes a code hash" do
-    code = "AQDksEm8P6lM6bfT1eMTocG8B8jH3UHZO14oiNtxZUMPT3oZMupxRYprm8ScdgxZZlATJPJ5OmVYM2W0aZoGpB4obT1CmrzR5OYDyox4EnyKPFQ3moo9Qq_vTyO3lvkgig_2BcBOYAK50voc--T3_Iqdhzeo8-ANbR5G7i22cV_JJU4W0LED7pn7pHeY26jL9PJTOsd7MIxFg9-Rw2CO7ACXzKDmslIj3J4Wh-Is2RrKkbUWNaTbRyMXPH23LQNtsOoIDJ2aQ5sfjiMNzBbrXtC_LnMPEKyRUKxNeM_gKcNBQD0yLLT98NL5nw3sa2Ff6LVKs_HFLg4lFnxQIlWvO1iw"
-    visit "/callback?code=#{code}"
+  it "index page's link to log in via Facebook has an id of 'facebook-login'" do 
+    visit '/'
+    expect(page.all('#facebook-login').count).to eq(1)
   end
 
-  it "result page defaults to bio as 'Sorry for the inconvenience, but a generated biography is unavailable.'" do
+  it 'index page displays correct url for link to log in via Facebook' do 
+    visit '/'
+    url = page.find('#facebook-login')['href']
+    expect(url).to have_content("https://www.facebook.com/dialog/oauth?client_id=")
+    expect(url).to have_content("&redirect_uri=")
+    expect(url).to have_content("&scope=")
+    # scopes
+    desired_scopes = ["email","user_birthday","user_friends","user_photos","user_education_history","user_hometown","user_location","user_website","user_work_history"]
+    desired_scopes.each do |scope|
+      expect(url).to have_content(scope)
+    end
+  end
+
+  it "result page defaults to bio as 'Sorry for the inconvenience'" do
     visit '/result'
     expect(page).to have_content("Sorry for the inconvenience, but a generated biography is unavailable.")
   end
