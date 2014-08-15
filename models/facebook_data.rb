@@ -7,27 +7,29 @@ class FacebookData
     @token = token
     @data = {}
     @name_pronouns = {}
-    @bio = []
-    @pic_url = get_fb_data("me/picture?redirect=false&")["data"]["url"]
+    @bio = "Sorry for the inconvenience, but a generated biography is unavailable."
+    @pic_url = "http://placekitten.com/g/50/50"
   end
 
   def fetch_pic
     data = get_fb_data("me/picture?redirect=false&")
     if data["data"]
       if data["data"]["url"]
-        return data["data"]["url"]
+        pic_url = data["data"]["url"]
       end
     end
-    return "http://placekitten.com/52/52"
   end
+  
   ###########
   # runners #
   ###########
-
   def run
+    bio = []
     get_data
     set_data
     write_bio
+    fetch_pic
+    return self
   end
 
   def set_data

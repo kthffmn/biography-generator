@@ -2,17 +2,14 @@ require 'spec_helper'
 
 describe 'User flow', :type => :feature do
 
-  it 'index page displays correct text for link to log in via Facebook' do 
-    visit '/'
-    expect(page).to have_link("Login through Facebook")
-  end
-
   it "index page's link to log in via Facebook has an id of 'facebook-login'" do 
     visit '/'
+    expect(page).to have_link("Login through Facebook")
     expect(page.all('#facebook-login').count).to eq(1)
+    expect(page.all('#facebook-login')).to have_content("Login through Facebook")
   end
 
-  it 'index page displays correct url for link to log in via Facebook' do 
+  it "index page's link has the correct url for the first step of logging in via Facebook" do 
     visit '/'
     url = page.find('#facebook-login')['href']
     expect(url).to have_content("https://www.facebook.com/dialog/oauth?client_id=")
@@ -25,7 +22,7 @@ describe 'User flow', :type => :feature do
     end
   end
 
-  it "result page defaults to bio as 'Sorry for the inconvenience'" do
+  it "result page defaults to bio as 'Sorry for the inconvenience...'" do
     visit '/result'
     expect(page).to have_content("Sorry for the inconvenience, but a generated biography is unavailable.")
   end
