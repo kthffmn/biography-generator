@@ -30,3 +30,16 @@
 .token {
   font-size: 0.6em;
 }
+
+.privacy-policy {
+  float: right;
+}
+
+.innerText {
+  margin-left: 20px;
+}
+
+.innerinnerText {
+  margin-left: 40px;
+  margin-top: 10px;
+}

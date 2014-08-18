@@ -27,4 +27,8 @@ class FacebookApp < Sinatra::Application
     erb :result
   end
 
+  get "/privacypolicy" do
+    erb :privacy_policy
+  end
+
 end
